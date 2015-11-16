@@ -14,7 +14,7 @@ import pl.silver.json.LibGdxJsonSerialization;
 
 public class JGNLServer
 {
-	Server server;
+	private Server server;
 
 	private RequestReciver requestReciver;
 

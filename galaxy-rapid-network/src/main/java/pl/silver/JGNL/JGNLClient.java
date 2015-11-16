@@ -61,7 +61,7 @@ public class JGNLClient implements Transmission
 					future.setAnswer(answer);
 					futures.remove(future.getMessageId());
 				}
-				System.out.println("recived");
+//				System.out.println("recived2");
 				if(reciver != null) {
 					reciver.reciveEvent(object);
 				}
