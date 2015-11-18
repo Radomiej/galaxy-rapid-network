@@ -81,7 +81,7 @@ public class JGNLClient implements Transmission
 	}
 
 	private void createClient() {
-		this.client = new Client(Network.WRITE_BUFFER, Network.READ_BUFFER, new LibGdxJsonSerialization());
+		this.client = new Client(Network.WRITE_BUFFER, Network.READ_BUFFER);
 		Network.register(client);
 	}
 

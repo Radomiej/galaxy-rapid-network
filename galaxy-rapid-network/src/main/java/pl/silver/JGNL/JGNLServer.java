@@ -64,7 +64,7 @@ public class JGNLServer
 	}
 
 	private void createServer() {
-		server = new Server(Network.WRITE_BUFFER, Network.READ_BUFFER, new LibGdxJsonSerialization(true, true)) {
+		server = new Server(Network.WRITE_BUFFER, Network.READ_BUFFER) {
 			@Override
 			protected Connection newConnection() {
 				RemoteClient newPlayer = new RemoteClient();
