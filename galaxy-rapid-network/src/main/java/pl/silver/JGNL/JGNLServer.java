@@ -22,7 +22,10 @@ public class JGNLServer
 
 	private final Listener commonListener;
 
-	
+	public JGNLServer(Class... classesToRegister) {
+		this();
+		Network.registerClasses(classesToRegister);
+	}
 	
 	public JGNLServer() {
 		commonListener = new Listener.ThreadedListener(new Listener() {
@@ -49,7 +52,19 @@ public class JGNLServer
 	}
 
 	public void start(int tcp, int udp) {
-		server = new Server(Network.WRITE_BUFFER, Network.READ_BUFFER, new LibGdxJsonSerialization()) {
+		createServer();
+		Network.register(server);
+		server.start();
+		try {
+			server.bind(tcp, udp);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	private void createServer() {
+		server = new Server(Network.WRITE_BUFFER, Network.READ_BUFFER, new LibGdxJsonSerialization(true, true)) {
 			@Override
 			protected Connection newConnection() {
 				RemoteClient newPlayer = new RemoteClient();
@@ -57,14 +72,6 @@ public class JGNLServer
 				return newPlayer;
 			}
 		};
-		server.start();
-
-		try {
-			server.bind(tcp, udp);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
 	}
 
 	public void close() {
@@ -88,5 +95,9 @@ public class JGNLServer
 	}
 	public void sendEvent(Object object) {
 		server.sendToAllTCP(object);
+	}
+
+	public void sendUdpEvent(Object sendUpdateObject) {
+		server.sendToAllUDP(sendUpdateObject);
 	}
 }

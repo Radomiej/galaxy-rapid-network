@@ -21,6 +21,12 @@ public class JGNLClient implements Transmission
 	
 	private ServerEventReciver reciver;
 	
+	public JGNLClient() {
+	}
+
+	public JGNLClient(Class... classesToRegister) {
+		Network.registerClasses(classesToRegister);
+	}
 
 	public void connect(String host, int tcp, int udp) throws IOException {
 
@@ -76,6 +82,7 @@ public class JGNLClient implements Transmission
 
 	private void createClient() {
 		this.client = new Client(Network.WRITE_BUFFER, Network.READ_BUFFER, new LibGdxJsonSerialization());
+		Network.register(client);
 	}
 
 	public Future sendRequest(Object messageData) {
